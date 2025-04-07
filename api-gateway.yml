@@ -1,10 +1,10 @@
-
+server:
+  port: 8080
 
 spring:
   application:
     name: api-gateway
 
-  spring:
   cloud:
     gateway:
       routes:
@@ -14,16 +14,11 @@ spring:
             - Path=/foundation-service/**
           filters:
             - RewritePath=/foundation-service/(?<segment>.*), /${segment}
-
-        - id: foundation-swagger
-          uri: lb://foundation-service
-          predicates:
-            - Path=/swagger/foundation/**
-          filters:
-            - RewritePath=/swagger/foundation/(?<segment>.*), /${segment}
-
-server:
-  port: 8080
+            - RewriteResponseHeader=Location, /(?<path>.*), /foundation-service/${path}
+    discovery:
+      locator:
+        enabled: true
+        lower-case-service-id: true
 
 eureka:
   client:

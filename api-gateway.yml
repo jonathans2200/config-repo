@@ -1,14 +1,6 @@
 spring:
-  application:
-    name: api-gateway
-
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-
       routes:
         - id: foundation-service
           uri: lb://foundation-service
@@ -17,12 +9,9 @@ spring:
           filters:
             - RewritePath=/foundation-service/(?<segment>.*), /${segment}
 
-server:
-  port: 8080
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka
-  instance:
-    prefer-ip-address: true
+        - id: foundation-swagger
+          uri: lb://foundation-service
+          predicates:
+            - Path=/swagger/foundation/**
+          filters:
+            - RewritePath=/swagger/foundation/(?<segment>.*), /${segment}

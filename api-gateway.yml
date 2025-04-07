@@ -12,6 +12,7 @@ spring:
             - Path=/foundation-service/**
           filters:
             - RewritePath=/foundation-service/(?<segment>.*), /${segment}
+        
         - id: animal-service
           uri: lb://animal-service
           predicates:
@@ -19,6 +20,8 @@ spring:
           filters:
             - RewritePath=/animal-service/(?<segment>.*), /${segment}
 
+       
+        
         - id: foundation-swagger
           uri: lb://foundation-service
           predicates:

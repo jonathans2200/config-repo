@@ -1,4 +1,8 @@
 spring:
+  application:
+    name: api-gateway
+
+  spring:
   cloud:
     gateway:
       routes:
@@ -15,3 +19,13 @@ spring:
             - Path=/swagger/foundation/**
           filters:
             - RewritePath=/swagger/foundation/(?<segment>.*), /${segment}
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+  instance:
+    prefer-ip-address: true
